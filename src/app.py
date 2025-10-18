@@ -3,7 +3,7 @@ from clean import basic_clean
 from segment import simple_stats
 from baseline import save, load
 from compare import deltas, color_flag
-from report import text_report
+from report import text_report, pdf_report
 
 VEHICLE_ID = "demo_vehicle"
 
@@ -22,8 +22,16 @@ if __name__ == "__main__":
     base = load(VEHICLE_ID)
     d = deltas(new_stats, base)
 
-    # 3) print simple report
+    # console output
     print(text_report(VEHICLE_ID, d))
     print("\nFlags:")
+    flags = {}
     for k, delta in d.items():
-        print(k, color_flag(delta))
+        f = color_flag(delta, k)  # pass pid
+        flags[k] = f
+        print(k, f)
+
+    # 3) -------- PDF output --------
+    meta = {"Baseline file": "data/healthy.csv", "New scan": "data/newscan.csv"}
+    pdf_report("report.pdf", VEHICLE_ID, d, flags, meta)
+    print("\nSaved PDF: report.pdf")
