@@ -1,0 +1,18 @@
+# OS & editor
+.DS_Store
+Thumbs.db
+*.log
+
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.env
+
+
+# Local data (keep out of Git)
+_baselines/
+confidential/
+ai_models/
+data/raw/
